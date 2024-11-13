@@ -51,35 +51,8 @@ for i in range(2):
 #Aplicar convertidor de Billones y Millones a nuestro data frame
 tesla_revenue["Revenue"] = tesla_revenue["Revenue"].apply(convertidor_de_millones)
 #Convertir Data en una fecha mas maneable
-tesla_revenue["Date"] = pd.to_datetime(tesla_revenue["Date"]).dt.strftime('%Y-%m-%d')
+tesla_revenue["Date"] = pd.to_datetime(tesla_revenue["Date"])
 
-#---SQL---
-
-#Hacer la coneccion y crear el cursos
-connection = sqlite3.connect("Tesla.db")
-cursor = connection.cursor()
-
-#Crear tabla
-cursor.execute("CREATE TABLE IF NOT EXISTS tesla_revenue (Date, Revenue_Million)")
-
-#Ingresar valores a la tabla
-for _, row in tesla_revenue.iterrows():
-    cursor.execute('''
-    INSERT INTO tesla_revenue 
-    VALUES (?,?)
-    ''',(row["Date"],row["Revenue"]))
-
-connection.commit()
-
-#Ver los datos del SQL
-'''
-for row in cursor.execute("SELECT * FROM tesla_revenue"):
-    print(row)
-'''
-
-connection.close()
-
-#---VISUALIZAR DATOS #1---
 
 #Visualizacion de la nueva tabla
 view_table_1 = tesla_revenue.sort_values(by="Date")

@@ -1,5 +1,4 @@
 
-
 #---SQL---
 
 #Hacer la coneccion y crear el cursos
@@ -26,15 +25,21 @@ for row in cursor.execute("SELECT * FROM tesla_revenue"):
 
 connection.close()
 
-#---VISUALIZAR DATOS
-plt.figure(figsize=(10, 5))
-plt.plot(tesla_revenue['Date'], tesla_revenue['Revenue'], marker='o', linestyle='-', color='b')
+#---VISUALIZAR DATOS #1---
 
-# Añadir título y etiquetas
-plt.title('Revenue de Tesla por Fecha')
-plt.xlabel('Fecha')
+#Visualizacion de la nueva tabla
+view_table_1 = tesla_revenue.sort_values(by="Date")
+
+plt.figure(figsize=(15, 10))
+plt.plot(view_table_1['Date'], view_table_1['Revenue'], marker='o', linestyle='-', color='r')
+
+plt.title('Revenue de Tesla por Trimestre')
+plt.xlabel('Date')
 plt.ylabel('Revenue (en millones)')
 plt.xticks(rotation=45)
 plt.grid()
 plt.tight_layout()
-plt.savefig("Figura_1.png")
+plt.savefig("view_1.png")
+
+#---VISUALIZAR DATOS #2---
+
